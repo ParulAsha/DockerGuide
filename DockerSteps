@@ -1,0 +1,29 @@
+how to create docker and run
+1:create a file named "Dockerfile" in the repository
+2: do mvn compile and mvn clean package
+this will create a jar file 
+
+(you can change the jar name in porm file 
+using the property
+<finalName>docker-spring-boot</finalName> after plugin)
+
+3: Add these properties in Dockerfile
+
+FROM openjdk:8
+ADD target/docker-spring-boot.jar docker-spring-boot.jar
+EXPOSE 8085
+ENTRYPOINT ["java","-jar","docker-spring-boot.jar"]
+
+4.run the command
+docker build -f Dockerfile -t docker-spring-boot .
+(. at the end since we are in the same folder)
+
+if this command show permission denied 
+run the command 
+
+sudo chmod 666 /var/run/docker.sock
+docker run hello-world
+4:run the command "docker images"
+5: run the command "docker run -p 8085:8085 docker-spring-boot"
+ (-p is for push and 8085 port in application is mapped to 8085 port)
+
